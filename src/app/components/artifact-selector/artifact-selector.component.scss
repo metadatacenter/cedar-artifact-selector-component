@@ -1,0 +1,30 @@
+.artifact-selector-container {
+  display: flex;
+  justify-content: space-between;
+}
+.artifact-selector-tree {
+  margin: 10px;
+  width: 70%;
+}
+.artifact-details {
+  cursor: pointer;
+}
+.selected-artifact {
+  padding: 5px;
+  border-style: solid;
+  border-color: #0F7686;
+  border-radius: 3px;
+  color: white;
+  background-color: #0F7686;
+}
+.separator {
+  width:10px;
+  background: linear-gradient(#0F7686, #0F7686) no-repeat center/2px 100%;
+  right: 300px;
+}
+.category {
+  text-transform: capitalize;
+  font-weight: bold;
+  padding: 5px;
+  font-size: medium;
+}

@@ -1,0 +1,42 @@
+<div *ngIf="readyToRender">
+  <h5>{{node[JsonSchema.schemaName]}}</h5>
+  <hr/>
+  <div>
+<!--    <div class="field-label">TYPE</div>-->
+<!--    <div>-->
+<!--      <div class="resource-icon large" >-->
+<!--        <div class="cell icon"  ng-class="field">-->
+<!--          <i class="large fa fa-cube"-->
+<!--             tooltip-placement="top"-->
+<!--             aria-hidden="true"></i>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      {{node[JsonSchema.atType]}}</div>-->
+  </div>
+  <div style="padding-top: 10px">
+    <div class="field-label">LOCATION</div>
+    <div>{{getPath(node[JsonSchema.path])}}</div>
+  </div>
+  <div style="padding-top: 10px">
+    <div class="field-label">OWNER</div>
+    <div>{{node[JsonSchema.ownedByUserName]}}</div>
+  </div>
+  <div style="padding-top: 10px">
+    <div class="field-label">CREATED</div>
+    <div>{{node[JsonSchema.createdByUserName]}}</div>
+  </div>
+  <div style="padding-top: 10px">
+    <div class="field-label">MODIFIED</div>
+    <div>{{node[JsonSchema.lastUpdatedByUserName]}}</div>
+  </div>
+  <div *ngIf="getNumOfInstances(node)" style="padding-top: 5px">
+    <div class="field-label">INSTANCES</div>
+    <div>{{node[JsonSchema.numberOfInstances]}}</div>
+  </div>
+  <div style="padding-top: 10px">
+    <button mat-stroked-button (click)="inspect(node)">
+      Inspect
+    </button>
+  </div>
+</div>
+
