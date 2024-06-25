@@ -16,15 +16,13 @@ export class ArtifactDetailsComponent{
   numOfInstances: number = 0;
 
   @Input() set selectedNode(_node: object) {
-    console.log('Details', _node);
     this.node = _node;
     this.showArtifactDetails = true;
     this.readyToRender = true
   }
   inspect(node: object) {
-    const lead = "https://cedar.metadatacenter.orgx/";
+    const base = window.location.origin;
     let type;
-    console.log('Inspecting node', node);
     // @ts-ignore
     if (node[JsonSchema.resourceType] === 'element') {
       type = 'elements';
@@ -34,8 +32,7 @@ export class ArtifactDetailsComponent{
           }
     }
     // @ts-ignore
-    let full = lead + type + '/edit/' + node[JsonSchema.atId];
-    console.log('Full', full);
+    let full = base + '/' + type + '/edit/' + node[JsonSchema.atId];
     window.open(full, '_blank');
   }
   getPath(path: string): string {
@@ -52,7 +49,6 @@ export class ArtifactDetailsComponent{
     if (instanceNum > 0) {
       return true;
     }
-    console.log('Returning instance num for node', instanceNum, node);
     return false;
   }
 

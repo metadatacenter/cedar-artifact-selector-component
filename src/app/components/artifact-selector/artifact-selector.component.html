@@ -5,7 +5,7 @@
         <button mat-icon-button disabled></button>
         <mat-checkbox *ngIf="node.checkbox" class="checklist-leaf-node"
                       [checked]="node.checked"
-                      (change)="todoItemSelectionToggle($event, node)"></mat-checkbox>
+                      (change)="treeNodeSelectionToggle($event, node)"></mat-checkbox>
         <span *ngIf="node.checkbox" (click)="handleNodeSelected(node)" class="artifact-details" [ngClass]="{'selected-artifact' : selectedNode === node}">{{node.item}}</span>
         <span *ngIf="!node.checkbox" [ngClass]="{'category' : node.isCategory === true}">{{node.item}}</span>
       </mat-tree-node>
@@ -18,7 +18,7 @@
           </mat-icon>
         </button>
         <mat-checkbox  *ngIf="node.checkbox" [checked]="node.checked"
-                       (change)="todoItemSelectionToggle($event, node)"></mat-checkbox>
+                       (change)="treeNodeSelectionToggle($event, node)"></mat-checkbox>
         <span *ngIf="node.checkbox" (click)="handleNodeSelected(node)" class="artifact-details" [ngClass]="{'selected-artifact' : selectedNode === node, 'category' : node.isCategory === true}">{{node.item}}</span>
         <span *ngIf="!node.checkbox" [ngClass]="{'category' : node.isCategory === true}">{{node.item}}</span>
       </mat-tree-node>

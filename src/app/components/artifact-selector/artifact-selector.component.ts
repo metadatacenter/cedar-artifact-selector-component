@@ -41,10 +41,6 @@ export class ChecklistDatabase {
     return this.fullData;
   }
 
-  // constructor() {
-  //   this.initialize(TREE_DATA);
-  // }
-
   initialize(treeData: object) {
 
     this.fullData = treeData;
@@ -169,7 +165,6 @@ export class ArtifactSelectorComponent {
   // @ts-ignore
   isVisible = (node: ArtifactFlatNode): boolean => node.visible;
 
-  hasNoContent = (_: number, _nodeData: ArtifactFlatNode) => _nodeData.item === '';
 
   /**
    * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
@@ -202,15 +197,8 @@ export class ArtifactSelectorComponent {
     return descAllSelected;
   }
 
-  /** Whether part of the descendants are selected */
-  descendantsPartiallySelected(node: ArtifactFlatNode): boolean {
-    const descendants = this.treeControl.getDescendants(node);
-    const result = descendants.some(child => this.checklistSelection.isSelected(child));
-    return result && !this.descendantsAllSelected(node);
-  }
-
-  /** Toggle the to-do item selection. Select/deselect all the descendants node */
-  todoItemSelectionToggle(event: MatCheckboxChange, node: ArtifactFlatNode): void {
+  /** Toggle the tree node. */
+  treeNodeSelectionToggle(event: MatCheckboxChange, node: ArtifactFlatNode): void {
     const treeNode = this.flatNodeMap.get(node);
     if(!treeNode) {
       console.error('Node not found');
@@ -230,56 +218,6 @@ export class ArtifactSelectorComponent {
     const hadi = this._database.originalData;
 
     this.treeSelectionChanged.emit(this._database.originalData);
-  }
-
-  /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
-  todoLeafItemSelectionToggle(event: MatCheckboxChange, node: ArtifactFlatNode): void {
-    this.checklistSelection.toggle(node);
-  }
-
-  /* Checks all the parents when a leaf node is selected/unselected */
-  checkAllParentsSelection(node: ArtifactFlatNode): void {
-    let parent: ArtifactFlatNode | null = this.getParentNode(node);
-    while (parent) {
-      this.checkRootNodeSelection(parent);
-      parent = this.getParentNode(parent);
-    }
-  }
-
-  /** Check root node checked state and change it accordingly */
-  checkRootNodeSelection(node: ArtifactFlatNode): void {
-    const nodeSelected = this.checklistSelection.isSelected(node);
-    const descendants = this.treeControl.getDescendants(node);
-    const descAllSelected =
-      descendants.length > 0 &&
-      descendants.every(child => {
-        return this.checklistSelection.isSelected(child);
-      });
-    if (nodeSelected && !descAllSelected) {
-      this.checklistSelection.deselect(node);
-    } else if (!nodeSelected && descAllSelected) {
-      this.checklistSelection.select(node);
-    }
-  }
-
-  /* Get the parent node of a node */
-  getParentNode(node: ArtifactFlatNode): ArtifactFlatNode | null {
-    const currentLevel = this.getLevel(node);
-// @ts-ignore
-    if (currentLevel < 1) {
-      return null;
-    }
-
-    const startIndex = this.treeControl.dataNodes.indexOf(node) - 1;
-
-    for (let i = startIndex; i >= 0; i--) {
-      const currentNode = this.treeControl.dataNodes[i];
-// @ts-ignore
-      if (this.getLevel(currentNode) < currentLevel) {
-        return currentNode;
-      }
-    }
-    return null;
   }
 
   handleNodeSelected(node: ArtifactFlatNode) {
