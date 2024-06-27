@@ -17,6 +17,13 @@
   color: white;
   background-color: #0F7686;
 }
+
+.not-selected-artifact {
+  padding: 5px;
+  border-style: solid;
+  border-radius: 3px;
+}
+
 .separator {
   width:10px;
   background: linear-gradient(#0F7686, #0F7686) no-repeat center/2px 100%;
@@ -27,4 +34,8 @@
   font-weight: bold;
   padding: 5px;
   font-size: medium;
+}
+
+.fa-info-circle {
+  padding-left: 5px;
 }

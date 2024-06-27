@@ -6,7 +6,7 @@
         <mat-checkbox *ngIf="node.checkbox" class="checklist-leaf-node"
                       [checked]="node.checked"
                       (change)="treeNodeSelectionToggle($event, node)"></mat-checkbox>
-        <span *ngIf="node.checkbox" (click)="handleNodeSelected(node)" class="artifact-details" [ngClass]="{'selected-artifact' : selectedNode === node}">{{node.item}}</span>
+        <span *ngIf="node.checkbox" (click)="handleNodeSelected(node)" class="artifact-details" [ngClass]="selectedNode === node ? 'selected-artifact' : 'not-selected-artifact'">{{node.item}} <i class="fa fa-info-circle"></i></span>
         <span *ngIf="!node.checkbox" [ngClass]="{'category' : node.isCategory === true}">{{node.item}}</span>
       </mat-tree-node>
 
@@ -19,7 +19,10 @@
         </button>
         <mat-checkbox  *ngIf="node.checkbox" [checked]="node.checked"
                        (change)="treeNodeSelectionToggle($event, node)"></mat-checkbox>
-        <span *ngIf="node.checkbox" (click)="handleNodeSelected(node)" class="artifact-details" [ngClass]="{'selected-artifact' : selectedNode === node, 'category' : node.isCategory === true}">{{node.item}}</span>
+        <span *ngIf="node.checkbox" (click)="handleNodeSelected(node)" class="artifact-details" [ngClass]="{'selected-artifact' : selectedNode === node, 'not-selected-artifact' : selectedNode !== node, 'category' : node.isCategory === true}">
+          {{node.item}}
+          <i class="fa fa-info-circle"></i>
+        </span>
         <span *ngIf="!node.checkbox" [ngClass]="{'category' : node.isCategory === true}">{{node.item}}</span>
       </mat-tree-node>
     </mat-tree>
