@@ -4,7 +4,6 @@ import {Component, EventEmitter, Injectable, Input, Output} from '@angular/core'
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject} from 'rxjs';
 import {MatCheckboxChange} from "@angular/material/checkbox";
-import {ArtifactDetailsService} from "../../service/artifact-details.service";
 
 export class TreeNode {
   children?: TreeNode[];
@@ -120,7 +119,9 @@ export class ArtifactSelectorComponent {
   // @ts-ignore
   selectedNode: ArtifactFlatNode = null;
 
-  constructor(private _database: ChecklistDatabase, private _artifactDetails: ArtifactDetailsService) {
+  _originNode = {};
+
+  constructor(private _database: ChecklistDatabase) {
     this.treeFlattener = new MatTreeFlattener(
       this.transformer,
       // @ts-ignore
@@ -148,6 +149,10 @@ export class ArtifactSelectorComponent {
     this.treeControl.expandAll();
     // Need to null the selected artifact details here since ngOnDestroy is not guaranteed to be called
     this.nodeDetails = null;
+  }
+
+  @Input() set originNode(_originNode: object) {
+    this._originNode = _originNode;
   }
 
   @Input() set artifactDetails(data: any){
@@ -215,9 +220,26 @@ export class ArtifactSelectorComponent {
 
     this.checklistSelection.toggle(node);
 
-    const hadi = this._database.originalData;
-
     this.treeSelectionChanged.emit(this._database.originalData);
+  }
+
+  getParentNode(node: ArtifactFlatNode): ArtifactFlatNode | null {
+    const currentLevel = this.getLevel(node);
+// @ts-ignore
+    if (currentLevel < 1) {
+      return null;
+    }
+
+    const startIndex = this.treeControl.dataNodes.indexOf(node) - 1;
+
+    for (let i = startIndex; i >= 0; i--) {
+      const currentNode = this.treeControl.dataNodes[i];
+// @ts-ignore
+      if (this.getLevel(currentNode) < currentLevel) {
+        return currentNode;
+      }
+    }
+    return null;
   }
 
   handleNodeSelected(node: ArtifactFlatNode) {
@@ -230,6 +252,21 @@ export class ArtifactSelectorComponent {
     obj.type = selectedArtifact.resourceType;
     // @ts-ignore
     obj.atId = selectedArtifact['@id'];
+    // const baba  = this.getParentNode(node);
+    // // console.log('Selected artifact', selectedArtifact);
+    // // console.log('Baba', baba);
+    // let dede;
+    // if(baba){
+    //   console.log('Babanin nodeu', this.flatNodeMap.get(baba));
+    //   console.log('Dedeye', this.getParentNode(baba));
+    //   dede = this.getParentNode(baba);
+    // }
+    // console.log('Ahanda basti', dede);
     this.nodeSelectionChanged.emit(obj)
+  }
+
+  getNodeParents(node: ArtifactFlatNode) {
+    let parents = [];
+    let parent = this.getParentNode(node);
   }
 }

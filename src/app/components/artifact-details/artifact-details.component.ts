@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {JsonSchema} from "../../json-schema.model";
-import {ArtifactFlatNode} from "../artifact-selector/artifact-selector.component";
+import {ArtifactIconService} from "../../service/artifact-icons.service";
 
 @Component({
   selector: 'app-artifact-details',
@@ -15,11 +15,15 @@ export class ArtifactDetailsComponent{
   readyToRender: boolean = false;
   numOfInstances: number = 0;
 
+  constructor(private _ArtifactIcons : ArtifactIconService) {}
+
+
   @Input() set selectedNode(_node: object) {
     this.node = _node;
     this.showArtifactDetails = true;
     this.readyToRender = true
   }
+
   inspect(node: object) {
     const base = window.location.origin;
     let type;
@@ -28,8 +32,8 @@ export class ArtifactDetailsComponent{
       type = 'elements';
     } else { // @ts-ignore
       if (node[JsonSchema.resourceType] === 'template'){
-            type = 'templates';
-          }
+        type = 'templates';
+      }
     }
     // @ts-ignore
     let full = base + '/' + type + '/edit/' + node[JsonSchema.atId];
@@ -50,6 +54,10 @@ export class ArtifactDetailsComponent{
       return true;
     }
     return false;
+  }
+
+  getArtifactIcon() {
+   return this._ArtifactIcons.getIconClass(this.node);
   }
 
   protected readonly JsonSchema = JsonSchema;

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ArtifactDetailsService } from './artifact-details.service';
+import { ArtifactDetailsService } from './artifact-icons.service';
 
 describe('ArtifactDetailsService', () => {
   let service: ArtifactDetailsService;

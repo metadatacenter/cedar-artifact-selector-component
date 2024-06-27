@@ -1,5 +1,8 @@
 <div *ngIf="readyToRender">
-  <h5>{{node[JsonSchema.schemaName]}}</h5>
+  <h5>
+    <i [ngClass]="getArtifactIcon()"></i>
+    {{node[JsonSchema.schemaName]}}
+  </h5>
   <hr/>
   <div>
 <!--    <div class="field-label">TYPE</div>-->
