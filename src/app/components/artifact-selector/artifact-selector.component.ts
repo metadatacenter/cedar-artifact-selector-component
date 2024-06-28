@@ -252,16 +252,16 @@ export class ArtifactSelectorComponent {
     obj.type = selectedArtifact.resourceType;
     // @ts-ignore
     obj.atId = selectedArtifact['@id'];
-    // const baba  = this.getParentNode(node);
-    // // console.log('Selected artifact', selectedArtifact);
-    // // console.log('Baba', baba);
-    // let dede;
-    // if(baba){
-    //   console.log('Babanin nodeu', this.flatNodeMap.get(baba));
-    //   console.log('Dedeye', this.getParentNode(baba));
-    //   dede = this.getParentNode(baba);
-    // }
-    // console.log('Ahanda basti', dede);
+    const baba  = this.getParentNode(node);
+    console.log('Selected artifact', selectedArtifact);
+    console.log('Baba', baba);
+    let dede;
+    if(baba){
+      console.log('Babanin nodeu', this.flatNodeMap.get(baba));
+      console.log('Dedeye', this.getParentNode(baba));
+      dede = this.getParentNode(baba);
+    }
+    console.log('Ahanda basti', dede);
     this.nodeSelectionChanged.emit(obj)
   }
 
